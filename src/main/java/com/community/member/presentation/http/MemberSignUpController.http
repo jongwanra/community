@@ -1,0 +1,8 @@
+POST http://localhost:8080/api/members/sign-up
+Content-Type: application/json
+
+{
+  "email": "uncle.ra@naver.com",
+  "gender": "male",
+  "nickname": "uncle"
+}
