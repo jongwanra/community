@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
 import com.community.member.domain.Member;
-import com.community.member.domain.port.MemberWriter;
+import com.community.member.domain.repository.MemberWriter;
 import com.community.member.infrastructure.entity.MemberEntity;
 
 import lombok.RequiredArgsConstructor;

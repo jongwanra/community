@@ -1,4 +1,4 @@
-package com.community.member.domain.port;
+package com.community.member.domain.repository;
 
 import java.util.Optional;
 

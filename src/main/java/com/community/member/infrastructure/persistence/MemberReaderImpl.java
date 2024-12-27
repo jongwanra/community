@@ -4,7 +4,7 @@ import static com.community.member.infrastructure.entity.QMemberEntity.*;
 
 import org.springframework.stereotype.Repository;
 
-import com.community.member.domain.port.MemberReader;
+import com.community.member.domain.repository.MemberReader;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import jakarta.persistence.EntityManager;

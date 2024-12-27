@@ -9,10 +9,9 @@ import org.junit.jupiter.api.Test;
 import com.community.global.exception.CommunityException;
 import com.community.member.domain.Member;
 import com.community.member.domain.enums.Gender;
-import com.community.member.domain.port.MemberReader;
-import com.community.member.domain.port.MemberWriter;
-import com.community.member.mock.FakeMemberReader;
-import com.community.member.mock.FakeMemberWriter;
+import com.community.member.domain.repository.MemberReader;
+import com.community.member.domain.repository.MemberWriter;
+import com.community.member.mock.FakeMemberRepository;
 
 class MemberSignUpProcessorTest {
 	private MemberSignUpProcessor memberSignUpProcessor;
@@ -21,9 +20,9 @@ class MemberSignUpProcessorTest {
 
 	@BeforeEach
 	void setUp() {
-		FakeMemberWriter fakeMemberWriter = new FakeMemberWriter();
-		memberReader = new FakeMemberReader(fakeMemberWriter);
-		memberWriter = fakeMemberWriter;
+		FakeMemberRepository memberRepository = new FakeMemberRepository();
+		memberReader = memberRepository;
+		memberWriter = memberRepository;
 		memberSignUpProcessor = new MemberSignUpProcessor(memberWriter, memberReader);
 
 	}

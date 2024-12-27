@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.community.global.enums.ErrorCode;
 import com.community.global.exception.CommunityException;
 import com.community.member.domain.Member;
-import com.community.member.domain.enums.Gender;
 import com.community.member.domain.repository.MemberReader;
 import com.community.member.domain.repository.MemberWriter;
 
@@ -14,41 +13,26 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class MemberSignUpProcessor {
+public class MemberChangeNicknameProcessor {
 	private final MemberWriter memberWriter;
 	private final MemberReader memberReader;
 
 	@Transactional
 	public void execute(Command command) {
-		validateEmailIsDuplicated(command.email);
-		validateNicknameIsDuplicated(command.nickname);
+		Member member = memberWriter.findById(command.memberId)
+			.orElseThrow(() -> new CommunityException(ErrorCode.MEMBER_NOT_FOUND));
 
-		memberWriter.save(
-			Member
-				.builder()
-				.email(command.email)
-				.nickname(command.nickname)
-				.gender(command.gender)
-				.build()
-		);
-	}
-
-	private void validateNicknameIsDuplicated(String nickname) {
-		if (memberReader.existsByNickname(nickname)) {
+		if (memberReader.existsByNickname(command.nickname)) {
 			throw new CommunityException(ErrorCode.MEMBER_DUPLICATED_NICKNAME);
 		}
-	}
 
-	private void validateEmailIsDuplicated(String email) {
-		if (memberReader.existsByEmail(email)) {
-			throw new CommunityException(ErrorCode.MEMBER_DUPLICATED_EMAIL);
-		}
+		member.changeNickname(command.nickname);
+		memberWriter.save(member);
 	}
 
 	public record Command(
-		String email,
-		String nickname,
-		Gender gender
+		long memberId,
+		String nickname
 	) {
 
 	}

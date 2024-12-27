@@ -1,7 +1,8 @@
-package com.community.member.domain.port;
+package com.community.member.domain.repository;
 
 public interface MemberReader {
 	boolean existsByEmail(String email);
 
 	boolean existsByNickname(String nickname);
+	
 }

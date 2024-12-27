@@ -19,4 +19,12 @@ public class Member {
 		this.email = email;
 		this.gender = gender;
 	}
+
+	public void changeNickname(String nickname) {
+		// TODO: 특수문자 여부 체크 로직
+		if (this.nickname.equals(nickname)) {
+			return;
+		}
+		this.nickname = nickname;
+	}
 }

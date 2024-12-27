@@ -8,12 +8,24 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import com.community.member.domain.Member;
-import com.community.member.domain.port.MemberWriter;
+import com.community.member.domain.repository.MemberReader;
+import com.community.member.domain.repository.MemberWriter;
 
-public class FakeMemberWriter implements MemberWriter {
- 	final Map<Long, Member> store = new HashMap<>();
+public class FakeMemberRepository implements MemberReader, MemberWriter {
+	final Map<Long, Member> store = new HashMap<>();
 	private AtomicLong idGenerator = new AtomicLong(0);
 
+	@Override
+	public boolean existsByEmail(String email) {
+		return store.values().stream()
+			.anyMatch(member -> member.getEmail().equals(email));
+	}
+
+	@Override
+	public boolean existsByNickname(String nickname) {
+		return store.values().stream()
+			.anyMatch(member -> member.getNickname().equals(nickname));
+	}
 
 	@Override
 	public Optional<Member> findById(long memberId) {
@@ -22,7 +34,7 @@ public class FakeMemberWriter implements MemberWriter {
 
 	@Override
 	public Member save(Member member) {
-		if(member.getId() == null) {
+		if (member.getId() == null) {
 			long memberId = idGenerator.incrementAndGet();
 			ReflectionTestUtils.setField(member, "id", memberId);
 			store.put(memberId, member);
