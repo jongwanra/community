@@ -42,4 +42,13 @@ public class MemberReaderImpl implements MemberReader {
 			.where(memberEntity.nickname.eq(nickname))
 			.fetchFirst() != null;
 	}
+
+	@Override
+	public boolean existsById(long memberId) {
+		return queryFactory
+			.select(memberEntity.id)
+			.from(memberEntity)
+			.where(memberEntity.id.eq(memberId))
+			.fetchFirst() != null;
+	}
 }

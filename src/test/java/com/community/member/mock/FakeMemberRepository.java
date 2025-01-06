@@ -44,4 +44,9 @@ public class FakeMemberRepository implements MemberReader, MemberWriter {
 		store.put(member.getId(), member);
 		return member;
 	}
+
+	@Override
+	public boolean existsById(long memberId) {
+		return store.containsKey(memberId);
+	}
 }
