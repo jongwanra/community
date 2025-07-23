@@ -14,11 +14,11 @@ public class Post {
 	private Long memberId;
 
 	@Builder
-	private Post(Long id, String title, String content, Long memberId) {
+	private Post(Long id, String title, String content, Long memberId, PostStatus postStatus) {
 		this.id = id;
 		this.title = title;
 		this.content = content;
-		this.postStatus = PostStatus.PUBLISHED;
+		this.postStatus = postStatus;
 		this.memberId = memberId;
 	}
 

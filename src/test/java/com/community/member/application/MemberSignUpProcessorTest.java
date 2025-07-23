@@ -7,23 +7,19 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import com.community.global.exception.CommunityException;
+import com.community.member.application.repository.MemberRepository;
 import com.community.member.domain.Member;
 import com.community.member.domain.enums.Gender;
-import com.community.member.domain.repository.MemberReader;
-import com.community.member.domain.repository.MemberWriter;
 import com.community.member.mock.FakeMemberRepository;
 
 class MemberSignUpProcessorTest {
 	private MemberSignUpProcessor memberSignUpProcessor;
-	private MemberReader memberReader;
-	private MemberWriter memberWriter;
+	private MemberRepository memberRepository;
 
 	@BeforeEach
 	void setUp() {
-		FakeMemberRepository memberRepository = new FakeMemberRepository();
-		memberReader = memberRepository;
-		memberWriter = memberRepository;
-		memberSignUpProcessor = new MemberSignUpProcessor(memberWriter, memberReader);
+		this.memberRepository = new FakeMemberRepository();
+		memberSignUpProcessor = new MemberSignUpProcessor(memberRepository);
 
 	}
 
@@ -31,7 +27,7 @@ class MemberSignUpProcessorTest {
 	@Test
 	void execute() {
 		// given
-		memberWriter.save(
+		memberRepository.save(
 			Member.builder()
 				.id(1L)
 				.gender(Gender.MALE)
@@ -54,7 +50,7 @@ class MemberSignUpProcessorTest {
 	@Test
 	void execute2() {
 		// given
-		memberWriter.save(
+		memberRepository.save(
 			Member.builder()
 				.id(1L)
 				.gender(Gender.MALE)
@@ -77,7 +73,7 @@ class MemberSignUpProcessorTest {
 	@Test
 	void execute3() {
 
-		Member savedMember = memberWriter.save(Member.builder()
+		Member savedMember = memberRepository.save(Member.builder()
 			.gender(Gender.MALE)
 			.email("uncle.ra@naver.com")
 			.nickname("uncle.ra")

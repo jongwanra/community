@@ -1,10 +1,10 @@
-package com.community.post.domain.repository;
+package com.community.post.application.repository;
 
 import java.util.List;
 
 import com.community.post.domain.Post;
 
-public interface PostWriter {
+public interface PostRepository {
 	Post save(Post post);
 
 	List<Post> findAll();

@@ -5,25 +5,23 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.community.global.enums.ErrorCode;
 import com.community.global.exception.CommunityException;
+import com.community.member.application.repository.MemberRepository;
 import com.community.member.domain.Member;
 import com.community.member.domain.enums.Gender;
-import com.community.member.domain.repository.MemberReader;
-import com.community.member.domain.repository.MemberWriter;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class MemberSignUpProcessor {
-	private final MemberWriter memberWriter;
-	private final MemberReader memberReader;
+	private final MemberRepository memberRepository;
 
 	@Transactional
 	public void execute(Command command) {
-		validateEmailIsDuplicated(command.email);
-		validateNicknameIsDuplicated(command.nickname);
+		verifyEmailIsDuplicated(command.email);
+		verifyNicknameIsDuplicated(command.nickname);
 
-		memberWriter.save(
+		memberRepository.save(
 			Member
 				.builder()
 				.email(command.email)
@@ -33,14 +31,14 @@ public class MemberSignUpProcessor {
 		);
 	}
 
-	private void validateNicknameIsDuplicated(String nickname) {
-		if (memberReader.existsByNickname(nickname)) {
+	private void verifyNicknameIsDuplicated(String nickname) {
+		if (memberRepository.existsByNickname(nickname)) {
 			throw new CommunityException(ErrorCode.MEMBER_DUPLICATED_NICKNAME);
 		}
 	}
 
-	private void validateEmailIsDuplicated(String email) {
-		if (memberReader.existsByEmail(email)) {
+	private void verifyEmailIsDuplicated(String email) {
+		if (memberRepository.existsByEmail(email)) {
 			throw new CommunityException(ErrorCode.MEMBER_DUPLICATED_EMAIL);
 		}
 	}

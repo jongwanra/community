@@ -7,11 +7,10 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.test.util.ReflectionTestUtils;
 
+import com.community.post.application.repository.PostRepository;
 import com.community.post.domain.Post;
-import com.community.post.domain.repository.PostReader;
-import com.community.post.domain.repository.PostWriter;
 
-public class FakePostRepository implements PostWriter, PostReader {
+public class FakePostRepository implements PostRepository {
 	final Map<Long, Post> store = new HashMap<>();
 	private AtomicLong idGenerator = new AtomicLong(0);
 

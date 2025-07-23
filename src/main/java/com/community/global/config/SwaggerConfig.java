@@ -5,7 +5,6 @@ import java.util.Arrays;
 import org.springdoc.core.customizers.OperationCustomizer;
 import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 import com.community.global.annotation.ApiResponseCode;
 import com.community.global.annotation.ApiResponseCodes;
@@ -16,8 +15,8 @@ import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 
-@Configuration
 @Slf4j
+// @Configuration
 public class SwaggerConfig {
 	@Bean
 	public OperationCustomizer operationCustomizer() {

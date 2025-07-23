@@ -7,23 +7,19 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import com.community.global.exception.CommunityException;
+import com.community.member.application.repository.MemberRepository;
 import com.community.member.domain.Member;
 import com.community.member.domain.enums.Gender;
-import com.community.member.domain.repository.MemberReader;
-import com.community.member.domain.repository.MemberWriter;
 import com.community.member.mock.FakeMemberRepository;
 
 class MemberChangeNicknameProcessorTest {
 	private MemberChangeNicknameProcessor memberChangeNicknameProcessor;
-	private MemberWriter memberWriter;
-	private MemberReader memberReader;
+	private MemberRepository memberRepository;
 
 	@BeforeEach
 	void setUp() {
-		FakeMemberRepository memberRepository = new FakeMemberRepository();
-		memberWriter = memberRepository;
-		memberReader = memberRepository;
-		memberChangeNicknameProcessor = new MemberChangeNicknameProcessor(memberWriter, memberReader);
+		this.memberRepository = new FakeMemberRepository();
+		memberChangeNicknameProcessor = new MemberChangeNicknameProcessor(memberRepository);
 	}
 
 	@DisplayName("회원은 닉네임을 변경할 수 있다.")
@@ -41,7 +37,7 @@ class MemberChangeNicknameProcessorTest {
 			.gender(Gender.MALE)
 			.build();
 
-		memberWriter.save(member);
+		memberRepository.save(member);
 
 		// when
 		memberChangeNicknameProcessor.execute(new MemberChangeNicknameProcessor.Command(
@@ -49,7 +45,7 @@ class MemberChangeNicknameProcessorTest {
 			nicknameToChange
 		));
 
-		Member changedMember = memberWriter.findById(memberId).orElseThrow();
+		Member changedMember = memberRepository.findById(memberId).orElseThrow();
 
 		// then
 		assertThat(changedMember.getNickname()).isEqualTo(nicknameToChange);
@@ -73,7 +69,7 @@ class MemberChangeNicknameProcessorTest {
 			.gender(Gender.MALE)
 			.build();
 
-		memberWriter.save(memberHasSameNickname);
+		memberRepository.save(memberHasSameNickname);
 
 		// when & then
 		assertThatThrownBy(() -> {

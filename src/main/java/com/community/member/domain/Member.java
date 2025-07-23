@@ -27,4 +27,8 @@ public class Member {
 		}
 		this.nickname = nickname;
 	}
+
+	public void delete() {
+		// TODO ...
+	}
 }

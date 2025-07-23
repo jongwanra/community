@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Entity(name = "member")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MemberEntity extends BaseTimeEntity {
+public class MemberJpaEntity extends BaseTimeEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "member_id")
@@ -28,13 +28,13 @@ public class MemberEntity extends BaseTimeEntity {
 
 	private Gender gender;
 
-	public static MemberEntity from(Member member) {
-		MemberEntity memberEntity = new MemberEntity();
-		memberEntity.id = member.getId();
-		memberEntity.nickname = member.getNickname();
-		memberEntity.email = member.getEmail();
-		memberEntity.gender = member.getGender();
-		return memberEntity;
+	public static MemberJpaEntity from(Member member) {
+		MemberJpaEntity memberJpaEntity = new MemberJpaEntity();
+		memberJpaEntity.id = member.getId();
+		memberJpaEntity.nickname = member.getNickname();
+		memberJpaEntity.email = member.getEmail();
+		memberJpaEntity.gender = member.getGender();
+		return memberJpaEntity;
 	}
 
 	public Member toDomain() {

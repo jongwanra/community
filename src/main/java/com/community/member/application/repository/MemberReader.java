@@ -1,4 +1,4 @@
-package com.community.member.domain.repository;
+package com.community.member.application.repository;
 
 public interface MemberReader {
 	boolean existsByEmail(String email);

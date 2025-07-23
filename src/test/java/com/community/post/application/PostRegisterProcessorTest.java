@@ -11,30 +11,26 @@ import org.junit.jupiter.api.Test;
 import net.bytebuddy.utility.RandomString;
 
 import com.community.global.exception.CommunityException;
+import com.community.member.application.repository.MemberRepository;
 import com.community.member.domain.Member;
 import com.community.member.domain.enums.Gender;
-import com.community.member.domain.repository.MemberReader;
-import com.community.member.domain.repository.MemberWriter;
 import com.community.member.mock.FakeMemberRepository;
 import com.community.post.application.PostRegisterProcessor.Command;
+import com.community.post.application.repository.PostRepository;
 import com.community.post.domain.Post;
 import com.community.post.domain.enums.PostStatus;
-import com.community.post.domain.repository.PostWriter;
 import com.community.post.mock.FakePostRepository;
 
 class PostRegisterProcessorTest {
 	private PostRegisterProcessor postRegisterProcessor;
-	private PostWriter postWriter;
-	private MemberReader memberReader;
-	private MemberWriter memberWriter;
+	private PostRepository postRepository;
+	private MemberRepository memberRepository;
 
 	@BeforeEach
 	void setUp() {
-		FakeMemberRepository memberRepository = new FakeMemberRepository();
-		this.memberReader = memberRepository;
-		this.memberWriter = memberRepository;
-		this.postWriter = new FakePostRepository();
-		postRegisterProcessor = new PostRegisterProcessor(postWriter, memberReader);
+		this.memberRepository = new FakeMemberRepository();
+		this.postRepository = new FakePostRepository();
+		postRegisterProcessor = new PostRegisterProcessor(postRepository, memberRepository);
 
 	}
 
@@ -62,7 +58,7 @@ class PostRegisterProcessorTest {
 		final String content = RandomString.make(100);
 		final long memberId = 1L;
 
-		memberWriter.save(
+		memberRepository.save(
 			Member.builder()
 				.id(memberId)
 				.gender(Gender.MALE)
@@ -74,9 +70,9 @@ class PostRegisterProcessorTest {
 
 		// when
 		postRegisterProcessor.execute(command);
-		
+
 		// then
-		List<Post> posts = postWriter.findAll();
+		List<Post> posts = postRepository.findAll();
 		assertThat(posts).hasSize(1);
 		Post post = posts.get(0);
 
