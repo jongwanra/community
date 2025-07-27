@@ -1,4 +1,4 @@
-package com.community.post.application.repository;
+package com.community.post.application.port;
 
 import java.util.List;
 

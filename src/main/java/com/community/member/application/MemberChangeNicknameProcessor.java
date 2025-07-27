@@ -5,7 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.community.global.enums.ErrorCode;
 import com.community.global.exception.CommunityException;
-import com.community.member.application.repository.MemberRepository;
+import com.community.member.application.port.MemberRepository;
 import com.community.member.domain.Member;
 
 import lombok.RequiredArgsConstructor;
@@ -17,15 +17,12 @@ public class MemberChangeNicknameProcessor {
 
 	@Transactional
 	public void execute(Command command) {
-		Member member = memberRepository.findById(command.memberId)
-			.orElseThrow(() -> new CommunityException(ErrorCode.MEMBER_NOT_FOUND));
+		Member member = memberRepository.findById(command.memberId);
 
 		if (memberRepository.existsByNickname(command.nickname)) {
 			throw new CommunityException(ErrorCode.MEMBER_DUPLICATED_NICKNAME);
 		}
-
-		member.changeNickname(command.nickname);
-		memberRepository.save(member);
+		memberRepository.save(member.changeNickname(command.nickname));
 	}
 
 	public record Command(

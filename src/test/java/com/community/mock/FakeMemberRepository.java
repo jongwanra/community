@@ -1,13 +1,14 @@
-package com.community.member.mock;
+package com.community.mock;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.test.util.ReflectionTestUtils;
 
-import com.community.member.application.repository.MemberRepository;
+import com.community.global.enums.ErrorCode;
+import com.community.global.exception.CommunityException;
+import com.community.member.application.port.MemberRepository;
 import com.community.member.domain.Member;
 
 public class FakeMemberRepository implements MemberRepository {
@@ -15,8 +16,11 @@ public class FakeMemberRepository implements MemberRepository {
 	private AtomicLong idGenerator = new AtomicLong(0);
 
 	@Override
-	public Optional<Member> findById(long memberId) {
-		return Optional.ofNullable(store.get(memberId));
+	public Member findById(long memberId) {
+		if (store.containsKey(memberId)) {
+			return store.get(memberId);
+		}
+		throw new CommunityException(ErrorCode.MEMBER_NOT_FOUND);
 	}
 
 	@Override
@@ -34,17 +38,19 @@ public class FakeMemberRepository implements MemberRepository {
 
 	@Override
 	public boolean existsByNickname(String nickname) {
-		return false;
+		return store.values().stream()
+			.anyMatch(member -> member.getNickname().equals(nickname));
 	}
 
 	@Override
 	public boolean existsByEmail(String email) {
-		return false;
+		return store.values().stream()
+			.anyMatch(member -> member.getEmail().equals(email));
 	}
 
 	@Override
 	public boolean existsById(Long memberId) {
-		return false;
+		return store.containsKey(memberId);
 	}
 
 }

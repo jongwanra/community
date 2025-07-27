@@ -5,7 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.community.global.enums.ErrorCode;
 import com.community.global.exception.CommunityException;
-import com.community.member.application.repository.MemberRepository;
+import com.community.member.application.port.MemberRepository;
 import com.community.member.domain.Member;
 import com.community.member.domain.enums.Gender;
 

@@ -7,10 +7,10 @@ import lombok.Getter;
 
 @Getter
 public class Member {
-	private Long id;
-	private String nickname;
-	private String email;
-	private Gender gender;
+	private final Long id;
+	private final String nickname;
+	private final String email;
+	private final Gender gender;
 
 	@Builder
 	private Member(Long id, String nickname, String email, Gender gender) {
@@ -20,12 +20,17 @@ public class Member {
 		this.gender = gender;
 	}
 
-	public void changeNickname(String nickname) {
+	public Member changeNickname(String nickname) {
 		// TODO: 특수문자 여부 체크 로직
 		if (this.nickname.equals(nickname)) {
-			return;
+			return this;
 		}
-		this.nickname = nickname;
+		return Member.builder()
+			.id(this.id)
+			.nickname(nickname)
+			.email(this.email)
+			.gender(this.gender)
+			.build();
 	}
 
 	public void delete() {

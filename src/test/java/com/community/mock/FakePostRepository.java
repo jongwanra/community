@@ -1,4 +1,4 @@
-package com.community.post.mock;
+package com.community.mock;
 
 import java.util.HashMap;
 import java.util.List;
@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.test.util.ReflectionTestUtils;
 
-import com.community.post.application.repository.PostRepository;
+import com.community.post.application.port.PostRepository;
 import com.community.post.domain.Post;
 
 public class FakePostRepository implements PostRepository {

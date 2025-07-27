@@ -1,8 +1,9 @@
 package com.community.member.application;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.community.member.application.repository.MemberRepository;
+import com.community.member.application.port.MemberRepository;
 import com.community.member.domain.Member;
 
 @Service
@@ -13,10 +14,9 @@ public class MemberDeleteProcessor {
 		this.memberRepository = memberRepository;
 	}
 
+	@Transactional
 	public void execute(Command command) {
-		Member member = memberRepository.findById(command.memberId)
-			.orElseThrow();
-		
+		Member member = memberRepository.findById(command.memberId);
 		member.delete();
 		memberRepository.save(member);
 	}

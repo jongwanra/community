@@ -1,10 +1,10 @@
 package com.community.member.infrastructure.persistence;
 
-import java.util.Optional;
-
 import org.springframework.stereotype.Repository;
 
-import com.community.member.application.repository.MemberRepository;
+import com.community.global.enums.ErrorCode;
+import com.community.global.exception.CommunityException;
+import com.community.member.application.port.MemberRepository;
 import com.community.member.domain.Member;
 import com.community.member.infrastructure.entity.MemberJpaEntity;
 
@@ -17,9 +17,10 @@ public class MemberRepositoryImpl implements MemberRepository {
 	}
 
 	@Override
-	public Optional<Member> findById(long memberId) {
+	public Member findById(long memberId) {
 		return memberJpaRepository.findById(memberId)
-			.map(MemberJpaEntity::toDomain);
+			.orElseThrow(() -> new CommunityException(ErrorCode.MEMBER_NOT_FOUND))
+			.toDomain();
 	}
 
 	@Override

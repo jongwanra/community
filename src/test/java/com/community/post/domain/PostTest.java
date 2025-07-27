@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 
 import net.bytebuddy.utility.RandomString;
 
+import com.community.member.domain.Member;
+import com.community.member.domain.enums.Gender;
 import com.community.post.domain.enums.PostStatus;
 
 class PostTest {
@@ -17,21 +19,27 @@ class PostTest {
 		// given
 		final Long postId = 3L;
 		final String content = RandomString.make(1_000);
-		final Long memberId = 2L;
+		final Member member = Member.builder()
+			.id(2L)
+			.nickname("uncle.ra")
+			.gender(Gender.MALE)
+			.email("uncle.ra@gmail.com")
+			.build();
 		final String title = RandomString.make(100);
 
 		// when
 		Post post = Post.builder()
 			.id(postId)
 			.title(title)
-			.memberId(memberId)
+			.postStatus(PostStatus.PUBLISHED)
+			.writer(member)
 			.content(content)
 			.build();
 
 		// then
 		assertThat(post.getId()).isEqualTo(postId);
 		assertThat(post.getTitle()).isEqualTo(title);
-		assertThat(post.getMemberId()).isEqualTo(memberId);
+		assertThat(post.getWriter().getId()).isEqualTo(2L);
 		assertThat(post.getContent()).isEqualTo(content);
 		assertThat(post.getPostStatus()).isEqualTo(PostStatus.PUBLISHED);
 	}

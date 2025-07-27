@@ -1,11 +1,9 @@
-package com.community.member.application.repository;
-
-import java.util.Optional;
+package com.community.member.application.port;
 
 import com.community.member.domain.Member;
 
 public interface MemberRepository {
-	Optional<Member> findById(long memberId);
+	Member findById(long memberId);
 
 	Member save(Member member);
 

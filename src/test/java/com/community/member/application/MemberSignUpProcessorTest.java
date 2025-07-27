@@ -7,10 +7,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import com.community.global.exception.CommunityException;
-import com.community.member.application.repository.MemberRepository;
+import com.community.member.application.port.MemberRepository;
 import com.community.member.domain.Member;
 import com.community.member.domain.enums.Gender;
-import com.community.member.mock.FakeMemberRepository;
+import com.community.mock.FakeMemberRepository;
 
 class MemberSignUpProcessorTest {
 	private MemberSignUpProcessor memberSignUpProcessor;

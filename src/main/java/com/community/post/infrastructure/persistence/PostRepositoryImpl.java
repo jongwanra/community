@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.community.post.application.repository.PostRepository;
+import com.community.post.application.port.PostRepository;
 import com.community.post.domain.Post;
 import com.community.post.infrastructure.entity.PostJpaEntity;
 

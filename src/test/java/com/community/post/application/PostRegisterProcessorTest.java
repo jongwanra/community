@@ -11,15 +11,15 @@ import org.junit.jupiter.api.Test;
 import net.bytebuddy.utility.RandomString;
 
 import com.community.global.exception.CommunityException;
-import com.community.member.application.repository.MemberRepository;
+import com.community.member.application.port.MemberRepository;
 import com.community.member.domain.Member;
 import com.community.member.domain.enums.Gender;
-import com.community.member.mock.FakeMemberRepository;
+import com.community.mock.FakeMemberRepository;
+import com.community.mock.FakePostRepository;
 import com.community.post.application.PostRegisterProcessor.Command;
-import com.community.post.application.repository.PostRepository;
+import com.community.post.application.port.PostRepository;
 import com.community.post.domain.Post;
 import com.community.post.domain.enums.PostStatus;
-import com.community.post.mock.FakePostRepository;
 
 class PostRegisterProcessorTest {
 	private PostRegisterProcessor postRegisterProcessor;
@@ -78,7 +78,7 @@ class PostRegisterProcessorTest {
 
 		assertThat(post.getTitle()).isEqualTo(title);
 		assertThat(post.getContent()).isEqualTo(content);
-		assertThat(post.getMemberId()).isEqualTo(memberId);
+		assertThat(post.getWriter().getId()).isEqualTo(memberId);
 		assertThat(post.getPostStatus()).isEqualTo(PostStatus.PUBLISHED);
 	}
 
