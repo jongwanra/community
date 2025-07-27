@@ -1,6 +1,20 @@
 version: '3.8'
 
 services:
+  redis:
+    image: redis:7.0
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - monitoring
+    deploy:
+      resources:
+        limits:
+          cpus: "1" # maximum 1 core allocated
+          memory: 512M # maximum 512MB memory allocated
   database:
     image: mysql:8.0
     container_name: community-database
@@ -26,8 +40,10 @@ services:
           cpus: "2" # maximum 2 cores allocated
           memory: 2GB # maximum 2GB memory allocated
 
+
 volumes:
   mysql_data:
+  redis_data:
 
 networks:
   monitoring:

@@ -49,8 +49,8 @@ public class FakeMemberRepository implements MemberRepository {
 	}
 
 	@Override
-	public boolean existsById(Long memberId) {
-		return store.containsKey(memberId);
+	public void deleteAllInBatch() {
+		
 	}
 
 }

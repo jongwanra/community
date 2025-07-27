@@ -1,10 +1,8 @@
 package com.community.global.exception;
 
-import org.springframework.context.ApplicationEventPublisher;
-
 import com.community.global.enums.ErrorCode;
 
-public class CommunityException extends RuntimeException{
+public class CommunityException extends RuntimeException {
 	private ErrorCode errorCode;
 	private String message;
 
@@ -20,5 +18,9 @@ public class CommunityException extends RuntimeException{
 		this.message = errorCode.formatMessage(args);
 	}
 
-
+	public CommunityException(Exception e) {
+		super(e.getMessage());
+		this.errorCode = null;
+		this.message = e.getMessage();
+	}
 }

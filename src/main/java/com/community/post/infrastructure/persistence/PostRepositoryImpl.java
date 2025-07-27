@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.community.post.application.port.PostRepository;
 import com.community.post.domain.Post;
-import com.community.post.infrastructure.entity.PostJpaEntity;
+import com.community.post.infrastructure.entity.PostEntity;
 
 @Repository
 public class PostRepositoryImpl implements PostRepository {
@@ -18,7 +18,7 @@ public class PostRepositoryImpl implements PostRepository {
 
 	@Override
 	public Post save(Post post) {
-		return postJpaRepository.save(PostJpaEntity.from(post))
+		return postJpaRepository.save(PostEntity.from(post))
 			.toDomain();
 	}
 
@@ -26,7 +26,12 @@ public class PostRepositoryImpl implements PostRepository {
 	public List<Post> findAll() {
 		return postJpaRepository.findAll()
 			.stream()
-			.map(PostJpaEntity::toDomain)
+			.map(PostEntity::toDomain)
 			.toList();
+	}
+
+	@Override
+	public void deleteAllInBatch() {
+		postJpaRepository.deleteAllInBatch();
 	}
 }

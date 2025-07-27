@@ -7,18 +7,15 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import com.community.global.exception.CommunityException;
-import com.community.member.application.port.MemberRepository;
 import com.community.member.domain.Member;
 import com.community.member.domain.enums.Gender;
-import com.community.mock.FakeMemberRepository;
+import com.community.small.SmallTestSupport;
 
-class MemberChangeNicknameProcessorTest {
+class MemberChangeNicknameProcessorSmallTest extends SmallTestSupport {
 	private MemberChangeNicknameProcessor memberChangeNicknameProcessor;
-	private MemberRepository memberRepository;
 
 	@BeforeEach
 	void setUp() {
-		this.memberRepository = new FakeMemberRepository();
 		memberChangeNicknameProcessor = new MemberChangeNicknameProcessor(memberRepository);
 	}
 

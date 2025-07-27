@@ -1,7 +1,7 @@
 package com.community.post.infrastructure.entity;
 
 import com.community.global.entity.BaseTimeEntity;
-import com.community.member.infrastructure.entity.MemberJpaEntity;
+import com.community.member.infrastructure.entity.MemberEntity;
 import com.community.post.domain.Post;
 import com.community.post.domain.enums.PostStatus;
 
@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Entity(name = "post")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class PostJpaEntity extends BaseTimeEntity {
+public class PostEntity extends BaseTimeEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "post_id")
@@ -31,15 +31,15 @@ public class PostJpaEntity extends BaseTimeEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id", nullable = false)
-	private MemberJpaEntity member;
+	private MemberEntity member;
 	private PostStatus postStatus;
 
-	public static PostJpaEntity from(Post post) {
-		PostJpaEntity entity = new PostJpaEntity();
+	public static PostEntity from(Post post) {
+		PostEntity entity = new PostEntity();
 		entity.id = post.getId();
 		entity.title = post.getTitle();
 		entity.content = post.getContent();
-		entity.member = MemberJpaEntity.from(post.getWriter());
+		entity.member = MemberEntity.from(post.getWriter());
 		entity.postStatus = post.getPostStatus();
 		return entity;
 	}

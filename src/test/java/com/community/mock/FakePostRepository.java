@@ -31,4 +31,10 @@ public class FakePostRepository implements PostRepository {
 	public List<Post> findAll() {
 		return store.values().stream().toList();
 	}
+
+	@Override
+	public void deleteAllInBatch() {
+		store.clear();
+		idGenerator.set(0);
+	}
 }

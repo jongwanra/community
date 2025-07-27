@@ -11,5 +11,6 @@ public interface MemberRepository {
 
 	boolean existsByEmail(String email);
 
-	boolean existsById(Long memberId);
+	void deleteAllInBatch();
+	
 }

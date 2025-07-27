@@ -11,25 +11,18 @@ import org.junit.jupiter.api.Test;
 import net.bytebuddy.utility.RandomString;
 
 import com.community.global.exception.CommunityException;
-import com.community.member.application.port.MemberRepository;
 import com.community.member.domain.Member;
 import com.community.member.domain.enums.Gender;
-import com.community.mock.FakeMemberRepository;
-import com.community.mock.FakePostRepository;
 import com.community.post.application.PostRegisterProcessor.Command;
-import com.community.post.application.port.PostRepository;
 import com.community.post.domain.Post;
 import com.community.post.domain.enums.PostStatus;
+import com.community.small.SmallTestSupport;
 
-class PostRegisterProcessorTest {
+class PostRegisterProcessorSmallTest extends SmallTestSupport {
 	private PostRegisterProcessor postRegisterProcessor;
-	private PostRepository postRepository;
-	private MemberRepository memberRepository;
 
 	@BeforeEach
 	void setUp() {
-		this.memberRepository = new FakeMemberRepository();
-		this.postRepository = new FakePostRepository();
 		postRegisterProcessor = new PostRegisterProcessor(postRepository, memberRepository);
 
 	}

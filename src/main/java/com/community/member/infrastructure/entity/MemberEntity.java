@@ -6,6 +6,8 @@ import com.community.member.domain.enums.Gender;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -16,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Entity(name = "member")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MemberJpaEntity extends BaseTimeEntity {
+public class MemberEntity extends BaseTimeEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "member_id")
@@ -26,15 +28,16 @@ public class MemberJpaEntity extends BaseTimeEntity {
 
 	private String email;
 
+	@Enumerated(EnumType.STRING)
 	private Gender gender;
 
-	public static MemberJpaEntity from(Member member) {
-		MemberJpaEntity memberJpaEntity = new MemberJpaEntity();
-		memberJpaEntity.id = member.getId();
-		memberJpaEntity.nickname = member.getNickname();
-		memberJpaEntity.email = member.getEmail();
-		memberJpaEntity.gender = member.getGender();
-		return memberJpaEntity;
+	public static MemberEntity from(Member member) {
+		MemberEntity memberEntity = new MemberEntity();
+		memberEntity.id = member.getId();
+		memberEntity.nickname = member.getNickname();
+		memberEntity.email = member.getEmail();
+		memberEntity.gender = member.getGender();
+		return memberEntity;
 	}
 
 	public Member toDomain() {

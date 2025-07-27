@@ -4,8 +4,10 @@ import com.community.member.domain.enums.Gender;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@ToString
 public class Member {
 	private final Long id;
 	private final String nickname;

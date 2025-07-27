@@ -7,19 +7,30 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import com.community.global.exception.CommunityException;
-import com.community.member.application.port.MemberRepository;
+import com.community.medium.MediumTestSupport;
 import com.community.member.domain.Member;
 import com.community.member.domain.enums.Gender;
-import com.community.mock.FakeMemberRepository;
 
-class MemberSignUpProcessorTest {
+class MemberSignUpProcessorMediumTest extends MediumTestSupport {
 	private MemberSignUpProcessor memberSignUpProcessor;
-	private MemberRepository memberRepository;
 
 	@BeforeEach
 	void setUp() {
-		this.memberRepository = new FakeMemberRepository();
 		memberSignUpProcessor = new MemberSignUpProcessor(memberRepository);
+
+	}
+
+	@DisplayName("회원이 DB에 제대로 적재되는지 확인한다.")
+	@Test
+	void save() {
+		Member member = memberRepository.save(
+			Member.builder()
+				.gender(Gender.MALE)
+				.email("uncle.ra@naver.com")
+				.nickname("uncle.ra")
+				.build());
+
+		System.out.println("member = " + member);
 
 	}
 
@@ -29,7 +40,6 @@ class MemberSignUpProcessorTest {
 		// given
 		memberRepository.save(
 			Member.builder()
-				.id(1L)
 				.gender(Gender.MALE)
 				.email("uncle.ra@naver.com")
 				.nickname("uncle.ra")
@@ -52,7 +62,6 @@ class MemberSignUpProcessorTest {
 		// given
 		memberRepository.save(
 			Member.builder()
-				.id(1L)
 				.gender(Gender.MALE)
 				.email("uncle.ra@naver.com")
 				.nickname("uncle.ra")
@@ -80,7 +89,7 @@ class MemberSignUpProcessorTest {
 			.build()
 		);
 
-		assertThat(savedMember.getId()).isEqualTo(1L);
+		assertThat(savedMember.getId()).isNotNull();
 		assertThat(savedMember.getGender()).isEqualTo(Gender.MALE);
 		assertThat(savedMember.getEmail()).isEqualTo("uncle.ra@naver.com");
 		assertThat(savedMember.getNickname()).isEqualTo("uncle.ra");

@@ -1,6 +1,6 @@
 package com.community.member.infrastructure.persistence;
 
-import static com.community.member.infrastructure.entity.QMemberJpaEntity.*;
+import static com.community.member.infrastructure.entity.QMemberEntity.*;
 
 import org.springframework.stereotype.Repository;
 
@@ -24,9 +24,9 @@ public class MemberReaderImpl implements MemberReader {
 		}
 
 		return queryFactory
-			.select(memberJpaEntity.id)
-			.from(memberJpaEntity)
-			.where(memberJpaEntity.email.eq(email))
+			.select(memberEntity.id)
+			.from(memberEntity)
+			.where(memberEntity.email.eq(email))
 			.fetchFirst() != null;
 	}
 
@@ -37,18 +37,18 @@ public class MemberReaderImpl implements MemberReader {
 		}
 
 		return queryFactory
-			.select(memberJpaEntity.id)
-			.from(memberJpaEntity)
-			.where(memberJpaEntity.nickname.eq(nickname))
+			.select(memberEntity.id)
+			.from(memberEntity)
+			.where(memberEntity.nickname.eq(nickname))
 			.fetchFirst() != null;
 	}
 
 	@Override
 	public boolean existsById(long memberId) {
 		return queryFactory
-			.select(memberJpaEntity.id)
-			.from(memberJpaEntity)
-			.where(memberJpaEntity.id.eq(memberId))
+			.select(memberEntity.id)
+			.from(memberEntity)
+			.where(memberEntity.id.eq(memberId))
 			.fetchFirst() != null;
 	}
 }
